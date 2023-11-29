@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsx src/main.ts",
-    "dev:watch": "tsx watch src/main.ts"
+    "dev:watch": "pnpm run deploy:commands && tsx watch src/main.ts",
+    "deploy:commands": "tsx src/commands/config/commands.deploy.ts"
   },
   "keywords": [],
   "author": "",
