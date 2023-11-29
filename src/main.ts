@@ -27,7 +27,14 @@ client.once("shardError", (error) => {
 const commands = Object(CommandModules);
 
 client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-  const { commandName } = interaction;
-  commands[commandName].execute(interaction, client);
+  // this validations changes what discord pass to de functions
+  if (interaction.isCommand()) {
+    const { commandName } = interaction;
+    commands[commandName].execute(interaction, client);
+  }
+
+  if (interaction.isAutocomplete()) {
+    const { commandName } = interaction;
+    commands[commandName].autocomplete(interaction);
+  }
 });
