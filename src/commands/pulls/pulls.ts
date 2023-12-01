@@ -50,11 +50,16 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     return;
   }
 
+  channel.createWebhook({
+    name: "pull-request-webhook",
+    avatar: "https://imgur.com/YcX0TD2",
+  });
+
   const projectName = interaction.options.get("projeto");
   const pullID = interaction.options.get("id");
 
   if (!pullID?.value || !projectName?.value) return;
-  console.log(projectName.value as string, pullID.value as number);
+
   try {
     const pullInfo = await getPullRequest(
       projectName.value as string,
@@ -107,12 +112,12 @@ export async function execute(interaction: CommandInteraction, client: Client) {
       interaction.reply({
         content: `
         **Revisores:** ${usersSelected}
-**Info:** Quando o pull request for concluído, comente '/close'
+**Info:** Quando o pull request for concluído, comente '/approve'
       `,
         components: [row],
       });
 
-      await thread.join();
+      await thread.members.add(interaction.user.id);
     });
   } catch (error) {
     return interaction.reply({

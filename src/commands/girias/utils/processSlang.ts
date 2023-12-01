@@ -9,6 +9,7 @@ export const Slangs = {
   "Você está vermelho(a)": "você está preparado(a)?",
   "Foi pro vinagre": "deu ruim completo, ferrou de vez, já era",
   São: "Sim e não ao mesmo tempo",
+  Bavaria: "Pra variar",
 };
 
 export function processSlang(option: TObjectKeyAsType<typeof Slangs>) {
