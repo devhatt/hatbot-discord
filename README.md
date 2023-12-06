@@ -26,8 +26,6 @@ Criar comandos personalizados visando automatizar nossos processos.
 
 ## Como Contribuir
 
-Se você é um entusiasta de pets, desenvolvedor em ascensão ou simplesmente quer fazer parte da comunidade PetDex, aqui estão algumas maneiras de contribuir:
-
 1. **Desenvolvimento:**
    - Faça um fork do repositório e trabalhe em novas funcionalidades.
    - Resolva problemas existentes ou proponha melhorias.
