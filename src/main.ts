@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import * as CommandModules from "./commands";
 import dotenv from "dotenv";
+import { env } from "./config/env";
 dotenv.config();
 
 const client = new Client({
@@ -13,7 +14,7 @@ const client = new Client({
   ],
 });
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(env.DISCORD_TOKEN);
 
 client.once("ready", (bot) => {
   console.log(
