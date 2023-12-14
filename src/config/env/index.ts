@@ -6,6 +6,7 @@ const envSchema = z.object({
   DISCORD_TOKEN: z.string(),
   CLIENT_ID: z.string(),
   DISCORD_SERVER_ID: z.string(),
+  NOTION_TOKEN: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);

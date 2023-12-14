@@ -1,8 +1,8 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import * as CommandModules from "./commands";
-import dotenv from "dotenv";
 import { env } from "./config/env";
-dotenv.config();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { DailyCronJobs } from "./cronjobs";
 
 const client = new Client({
   intents: [
@@ -40,3 +40,5 @@ client.on("interactionCreate", async (interaction) => {
     commands[commandName].autocomplete(interaction);
   }
 });
+
+DailyCronJobs.Run(client);
