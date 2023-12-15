@@ -1,20 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function GetRecentDaily(arrayDeObjetos: any[], object: any) {
-  // Filtrar objetos que contêm "object"
-  const daily = arrayDeObjetos.filter((obj) => obj[object]);
-
-  // Verificar se há algum "object"
-  if (daily.length === 0) {
-    return null; // Retorna null se não houver "object name"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function GetRecentDaily(arrayDeObjetos: any[], object: any): any {
+  if (!arrayDeObjetos) {
+    return null;
   }
 
-  // Encontrar o "octopost" mais recente com base em createdAt
-  const recentdaily = daily.reduce((recent, current) => {
-    const currentDate = new Date(current[object].createdAt);
-    const recentDate = new Date(recent[object].createdAt);
+  const dailys = arrayDeObjetos.filter((obj) => obj[object]);
 
-    return currentDate > recentDate ? current : recent;
-  });
+  const today = new Date();
+  const octopostsDoDiaAtual = dailys.filter(
+    (obj) =>
+      new Date(obj[object].createdAt).toDateString() === today.toDateString()
+  );
 
-  return recentdaily[object] as { pageId: string; createdAt: Date };
+  if (octopostsDoDiaAtual.length === 0) {
+    return null;
+  }
+
+  return octopostsDoDiaAtual[0][object];
 }

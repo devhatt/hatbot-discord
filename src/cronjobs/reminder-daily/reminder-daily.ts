@@ -24,13 +24,17 @@ async function ReminderDaily(client: Client<boolean>, options: Options) {
 
 export function Run(client: Client<boolean>) {
   new CronJob(
-    "0 13 * * * *", // Runs every day at 13h 00m
+    "0 13 * * *", // Runs every day at 13h 00m
     async () => {
       const pautasOctopost = await GetDailyPages("octopost", 20);
 
+      if (!pautasOctopost) {
+        return;
+      }
+
       ReminderDaily(client, {
         discordChannel,
-        message: `Daily começando em 1h - as 14h ${pautasOctopost.map(
+        message: `Daily começando em 1h - as 14h\n**Pautas**: ${pautasOctopost.map(
           (i) => `\n${i}`
         )}`,
         roleId: octopostRoleId,
@@ -46,9 +50,13 @@ export function Run(client: Client<boolean>) {
     async () => {
       const pautasPet = await GetDailyPages("petdex", 20);
 
+      if (!pautasPet) {
+        return;
+      }
+
       ReminderDaily(client, {
         discordChannel,
-        message: `Daile começando em 1h - as 16 ${pautasPet.map(
+        message: `Daily começando em 1h - as 16\n**Pautas:** ${pautasPet.map(
           (i) => `\n${i}`
         )}`,
         roleId: petdexRoleId,

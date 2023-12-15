@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@devhatt/eslint-config": "^1.0.1",
     "@notionhq/client": "^2.2.14",
     "cron": "^3.1.6",
     "discord.js": "^14.14.1",

@@ -1,78 +1,89 @@
-import { Client } from "@notionhq/client";
+import { Client } from '@notionhq/client'
 import {
   BulletedListItemBlockObjectResponse,
   DatabaseObjectResponse,
   TextRichTextItemResponse,
-} from "@notionhq/client/build/src/api-endpoints";
-import { env } from "../config/env";
-import { GetRecentDaily } from "../utils";
+} from '@notionhq/client/build/src/api-endpoints'
+
+import { GetRecentDaily } from '../utils'
+import { env } from '@/config/env'
 
 export const notionClient = new Client({
   auth: env.NOTION_TOKEN,
-});
+})
 
 type PropertiesSelectOptions = {
-  id: string;
-  type: string;
-  select?: { id: string; name: string; color: string };
-};
+  id: string
+  type: string
+  select?: { id: string; name: string; color: string }
+}
 
-export async function GetDailyPages(daily: string, page_size: number) {
-  const databaseQueryResponse = await notionClient.databases.query({
-    database_id: "7b626c16af1b4f0c986a9811f59cb9a9",
-    sorts: [
-      {
-        timestamp: "created_time",
-        direction: "descending",
-      },
-    ],
-    page_size,
-  });
-
-  const resultsDatabaseQueryResponse =
-    databaseQueryResponse.results as DatabaseObjectResponse[];
-
-  const pageWithPropertieDaily = resultsDatabaseQueryResponse
-    .map((item) => {
-      const optionsSelect = item.properties.Daily as PropertiesSelectOptions;
-
-      if (!optionsSelect.select) {
-        return;
-      }
-
-      if (optionsSelect.select.name == "PetDex") {
-        return {
-          petdex: { pageId: item.id, createdAt: new Date(item.created_time) },
-        };
-      } else if (optionsSelect.select.name == "Octopost") {
-        return {
-          octopost: { pageId: item.id, createdAt: new Date(item.created_time) },
-        };
-      }
+export async function GetDailyPages(daily: string, pageSize: number) {
+  try {
+    const databaseQueryResponse = await notionClient.databases.query({
+      database_id: '7b626c16af1b4f0c986a9811f59cb9a9',
+      sorts: [
+        {
+          timestamp: 'created_time',
+          direction: 'descending',
+        },
+      ],
+      page_size: pageSize,
     })
-    .filter(Boolean);
 
-  console.log(pageWithPropertieDaily);
+    const resultsDatabaseQueryResponse =
+      databaseQueryResponse.results as DatabaseObjectResponse[]
 
-  const recentDaily = GetRecentDaily(pageWithPropertieDaily, daily);
+    const pageWithPropertieDaily = resultsDatabaseQueryResponse
+      .map((item) => {
+        const optionsSelect = item.properties.Daily as PropertiesSelectOptions
 
-  const pageChildrenResponse = await notionClient.blocks.children.list({
-    block_id: recentDaily?.pageId || "",
-  });
+        if (!optionsSelect.select) {
+          return
+        }
 
-  const pageContent =
-    pageChildrenResponse.results as BulletedListItemBlockObjectResponse[];
+        const { select } = optionsSelect
+        const { id, created_time: createdAt } = item
 
-  const pautasDaily: string[] = [];
+        if (select.name === 'PetDex') {
+          return {
+            petdex: { pageId: id, createdAt: new Date(createdAt) },
+          }
+        }
 
-  pageContent.map((item) => {
-    const texts = item.bulleted_list_item
-      .rich_text as TextRichTextItemResponse[];
+        if (select.name === 'Octopost') {
+          return {
+            octopost: {
+              pageId: id,
+              createdAt: new Date(createdAt),
+            },
+          }
+        }
+      })
+      .filter(Boolean)
 
-    const textContent = texts.map((text) => text.text.content);
+    const recentDaily = GetRecentDaily(pageWithPropertieDaily, daily)
 
-    pautasDaily.push(textContent[0]);
-  });
+    const pageChildrenResponse = await notionClient.blocks.children.list({
+      block_id: recentDaily?.pageId || '',
+    })
 
-  return pautasDaily;
+    const pageContent =
+      pageChildrenResponse.results as BulletedListItemBlockObjectResponse[]
+
+    const pautasDaily: string[] = []
+
+    pageContent.map((item) => {
+      const texts = item.bulleted_list_item
+        .rich_text as TextRichTextItemResponse[]
+
+      const textContent = texts.map(({ text }) => text.content)
+
+      pautasDaily.push(textContent[0])
+    })
+
+    return pautasDaily
+  } catch (err) {
+    console.log(err)
+  }
 }
