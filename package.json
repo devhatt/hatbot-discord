@@ -8,8 +8,7 @@
     "dev": "tsx src/main.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev:watch": "pnpm run deploy:commands && tsx watch src/main.ts",
-    "deploy:commands": "tsx src/commands/config/commands.deploy.ts"
+    "dev:watch": "tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",

@@ -21,7 +21,7 @@ type PropertiesSelectOptions = {
 export async function GetDailyPages(daily: string, pageSize: number) {
   try {
     const databaseQueryResponse = await notionClient.databases.query({
-      database_id: '7b626c16af1b4f0c986a9811f59cb9a9',
+      database_id: env.NOTION_DATABASE_ID,
       sorts: [
         {
           timestamp: 'created_time',

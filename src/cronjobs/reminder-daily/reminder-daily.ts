@@ -1,69 +1,66 @@
-import { CronJob } from "cron";
-import { Client, TextChannel } from "discord.js";
-import { GetDailyPages } from "../../lib";
-
-const discordChannel = "1182331317082398751";
-const petdexRoleId = "1176201989797986456";
-const octopostRoleId = "1136795129219383376";
+import { GetDailyPages } from '@/lib'
+import { CronJob } from 'cron'
+import { Client, TextChannel } from 'discord.js'
+import { CONSTANTS } from '@/constants'
 
 interface Options {
-  discordChannel: string;
-  roleId: string;
-  message: string;
+  discordChannel: string
+  roleId: string
+  message: string
 }
 
 async function ReminderDaily(client: Client<boolean>, options: Options) {
-  const channel = client.channels.cache.get(options.discordChannel);
+  const channel = client.channels.cache.get(options.discordChannel)
 
   if (!channel || !(channel instanceof TextChannel)) {
-    return;
+    return
   }
 
-  channel.send(`<@&${options.roleId}> - ${options.message}`);
+  channel.send(`<@&${options.roleId}> - ${options.message}`)
 }
 
 export function Run(client: Client<boolean>) {
   new CronJob(
-    "0 13 * * *", // Runs every day at 13h 00m
+    '0 13 * * *', // Runs every day at 13h 00m
     async () => {
-      const pautasOctopost = await GetDailyPages("octopost", 20);
+      const agendaOctopost = await GetDailyPages('octopost', 20)
 
-      if (!pautasOctopost) {
-        return;
+      if (!agendaOctopost) {
+        return
       }
 
       ReminderDaily(client, {
-        discordChannel,
-        message: `Daily começando em 1h - as 14h\n**Pautas**: ${pautasOctopost.map(
+        discordChannel: CONSTANTS.CHANNEL_DISCORD,
+        message: `Daily começando em 1h - as 14h\n**Pautas**: ${agendaOctopost.map(
           (i) => `\n${i}`
         )}`,
-        roleId: octopostRoleId,
-      });
+        roleId: CONSTANTS.OCTOPOST_ROLE,
+      })
     },
     null,
     true,
-    "America/Sao_Paulo"
-  );
+    'America/Sao_Paulo'
+  )
 
   new CronJob(
-    "0 15 * * *", // Runs every day at 15h 00m
+    '0 15 * * *', // Runs every day at 15h 00m
     async () => {
-      const pautasPet = await GetDailyPages("petdex", 20);
+      const agendaPet = await GetDailyPages('petdex', 20)
 
-      if (!pautasPet) {
-        return;
+      if (!agendaPet) {
+        return
       }
 
       ReminderDaily(client, {
-        discordChannel,
-        message: `Daily começando em 1h - as 16\n**Pautas:** ${pautasPet.map(
+        discordChannel: CONSTANTS.CHANNEL_DISCORD,
+        message: `Daily começando em 1h - as 16\n**Pautas:** ${agendaPet.map(
           (i) => `\n${i}`
         )}`,
-        roleId: petdexRoleId,
-      });
+        roleId: CONSTANTS.PETDEX_ROLE,
+      })
     },
     null,
     true,
-    "America/Sao_Paulo"
-  );
+    'America/Sao_Paulo'
+  )
 }
