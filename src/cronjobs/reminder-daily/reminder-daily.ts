@@ -1,7 +1,7 @@
+import { env } from '@/config/env'
 import { GetDailyPages } from '@/lib'
 import { CronJob } from 'cron'
 import { Client, TextChannel } from 'discord.js'
-import { CONSTANTS } from '@/constants'
 
 interface Options {
   discordChannel: string
@@ -30,11 +30,11 @@ export function Run(client: Client<boolean>) {
       }
 
       ReminderDaily(client, {
-        discordChannel: CONSTANTS.CHANNEL_DISCORD,
+        discordChannel: env.DISCORD_CHANNEL,
         message: `Daily começando em 1h - as 14h\n**Pautas**: ${agendaOctopost.map(
           (i) => `\n${i}`
         )}`,
-        roleId: CONSTANTS.OCTOPOST_ROLE,
+        roleId: env.DISCORD_OCTOPOST_ROLE,
       })
     },
     null,
@@ -52,11 +52,11 @@ export function Run(client: Client<boolean>) {
       }
 
       ReminderDaily(client, {
-        discordChannel: CONSTANTS.CHANNEL_DISCORD,
+        discordChannel: env.DISCORD_CHANNEL,
         message: `Daily começando em 1h - as 16\n**Pautas:** ${agendaPet.map(
           (i) => `\n${i}`
         )}`,
-        roleId: CONSTANTS.PETDEX_ROLE,
+        roleId: env.DISCORD_PETDEX_ROLE,
       })
     },
     null,
