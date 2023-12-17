@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export function GetRecentDaily(arrayDeObjetos: any[], object: any): any {
+export function GetRecentDaily(objectArray: any[], object: any): any {
   if (!arrayDeObjetos) {
     return null
   }
