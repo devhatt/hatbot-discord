@@ -71,7 +71,7 @@ export async function GetDailyPages(daily: string, pageSize: number) {
     const pageContent =
       pageChildrenResponse.results as BulletedListItemBlockObjectResponse[]
 
-    const pautasDaily: string[] = []
+    const agendaDaily: string[] = []
 
     pageContent.map((item) => {
       const texts = item.bulleted_list_item
@@ -79,10 +79,10 @@ export async function GetDailyPages(daily: string, pageSize: number) {
 
       const textContent = texts.map(({ text }) => text.content)
 
-      pautasDaily.push(textContent[0])
+      agendaDaily.push(textContent[0])
     })
 
-    return pautasDaily
+    return agendaDaily
   } catch (err) {
     console.log(err)
   }
