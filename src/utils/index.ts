@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function GetRecentDaily(objectArray: any[], object: any): any {
-  if (!arrayDeObjetos) {
+  if (!objectArray) {
     return null
   }
 
-  const dailys = arrayDeObjetos.filter((obj) => obj[object])
+  const dailys = objectArray.filter((obj) => obj[object])
 
   const today = new Date()
   const dailyOnCurrentDate = dailys.filter(
