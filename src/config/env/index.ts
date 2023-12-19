@@ -8,7 +8,8 @@ const envSchema = z.object({
   DISCORD_SERVER_ID: z.string(),
   NOTION_TOKEN: z.string(),
   NOTION_DATABASE_ID: z.string(),
-  DISCORD_CHANNEL: z.string(),
+  DISCORD_PETDEX_CHANNEL: z.string(),
+  DISCORD_OCTOPOST_CHANNEL: z.string(),
   DISCORD_PETDEX_ROLE: z.string(),
   DISCORD_OCTOPOST_ROLE: z.string(),
 })

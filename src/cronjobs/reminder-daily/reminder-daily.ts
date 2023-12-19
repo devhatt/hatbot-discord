@@ -15,7 +15,7 @@ async function SendMessageDaily(client: Client<boolean>, options: Options) {
     return
   }
 
-  channel.send(`${options.message}`)
+  channel.send(options.message)
 }
 
 export function ReminderDaily(client: Client<boolean>) {
@@ -23,9 +23,8 @@ export function ReminderDaily(client: Client<boolean>) {
     '0 13 * * *', // Runs every day at 13h 00m
     async () => {
       SendMessageDaily(client, {
-        discordChannel: env.DISCORD_CHANNEL,
+        discordChannel: env.DISCORD_OCTOPOST_CHANNEL,
         message: `🦑 **[OCTOPOST]** Daily iniciando em 1h - as **14h** 🦑\nNo canal <#1137077093201625109>\nCola com nois!!1`,
-        roleId: env.DISCORD_OCTOPOST_ROLE,
       })
     },
     null,
@@ -37,9 +36,8 @@ export function ReminderDaily(client: Client<boolean>) {
     '0 15 * * *', // Runs every day at 15h 00m
     async () => {
       SendMessageDaily(client, {
-        discordChannel: env.DISCORD_CHANNEL,
+        discordChannel: env.DISCORD_PETDEX_CHANNEL,
         message: `🐶😺 **[PETDEX]** Daily iniciando em 1h - as **16h** 🐶😺\nNo canal <#1179104791826268180>\n Cola com nois!!1`,
-        roleId: env.DISCORD_PETDEX_ROLE,
       })
     },
     null,
