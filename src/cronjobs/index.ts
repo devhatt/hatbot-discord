@@ -1,1 +1,1 @@
-export * as DailyCronJobs from "./reminder-daily/reminder-daily";
+export * from './reminder-daily/reminder-daily'

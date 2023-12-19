@@ -1,6 +1,7 @@
 import { env } from '@/config/env'
 import { Client, REST, Routes } from 'discord.js'
 import * as commandModules from './commands'
+import { ReminderDaily } from './cronjobs'
 
 export class Bot {
   public commands = Object(commandModules)
@@ -21,6 +22,8 @@ export class Bot {
     this.registerCommands()
 
     this.onInteractionCreate()
+
+    this.runCronJobs()
   }
 
   private async registerCommands() {
@@ -52,5 +55,9 @@ export class Bot {
         this.commands[commandName].autocomplete(interaction)
       }
     })
+  }
+
+  private async runCronJobs() {
+    ReminderDaily(this.client)
   }
 }
