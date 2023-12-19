@@ -8,13 +8,15 @@
     "dev": "tsx src/main.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev:watch": "pnpm run deploy:commands && tsx watch src/main.ts",
-    "deploy:commands": "tsx src/commands/config/commands.deploy.ts"
+    "dev:watch": "tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@devhatt/eslint-config": "^1.0.1",
+    "@notionhq/client": "^2.2.14",
+    "cron": "^3.1.6",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "typescript": "^5.3.2",
