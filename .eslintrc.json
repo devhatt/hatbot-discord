@@ -1,12 +1,10 @@
 {
   "extends": "@devhatt/eslint-config/node",
+  "parserOptions": {
+    "warnOnUnsupportedTypeScriptVersion": false
+  },
   "rules": {
     "array-callback-return": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "off"
-      }
-    ]
+    "no-new": "off"
   }
 }
