@@ -17,7 +17,7 @@ export const data = new SlashCommandBuilder()
   .setDescription('Crie um novo Tópico para discutir sobre seu pr')
   .addNumberOption((option) =>
     option
-      .setName('id')
+      .setName('pull-request-id')
       .setDescription('Digite o ID do seu Pull Request')
       .setRequired(true)
   )
@@ -31,14 +31,19 @@ export const data = new SlashCommandBuilder()
 
 export async function autocomplete(interaction: AutocompleteInteraction) {
   const focused = interaction.options.getFocused(true)
-  const choices = ['Octopost', 'PetDex', 'Plowly']
+
+  const choices = [
+    { name: 'Octopost', value: 'octopost' },
+    { name: 'PetDex Frontend', value: 'pet-dex-frontend' },
+    { name: 'PetDex Backend', value: 'pet-dex-backend' },
+  ]
 
   const filtered = choices.filter((choice) =>
-    choice.toLowerCase().includes(focused.value.toLowerCase())
+    choice.value.toLowerCase().includes(focused.value.toLowerCase())
   )
 
   await interaction.respond(
-    filtered.map((choice) => ({ name: choice, value: choice }))
+    filtered.map((choice) => ({ name: choice.name, value: choice.value }))
   )
 }
 
@@ -50,13 +55,9 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     return
   }
 
-  channel.createWebhook({
-    name: 'pull-request-webhook',
-    avatar: 'https://imgur.com/YcX0TD2',
-  })
-
   const projectName = interaction.options.get('projeto')
-  const pullID = interaction.options.get('id')
+  const pullID = interaction.options.get('pull-request-id')
+
 
   if (!pullID?.value || !projectName?.value) return
 
