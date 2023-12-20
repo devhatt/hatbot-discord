@@ -5,6 +5,12 @@
   },
   "rules": {
     "array-callback-return": "off",
-    "no-new": "off"
+    "no-new": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

@@ -2,5 +2,8 @@
   "*.ts": [
     "prettier --write",
     "eslint --fix"
+  ],
+  "*.spec.ts":[
+    "jest"
   ]
 }
