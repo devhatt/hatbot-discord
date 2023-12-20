@@ -3,24 +3,24 @@ import {
   SlashCommandBuilder,
   Client,
   ChannelType,
-} from "discord.js";
+} from 'discord.js'
 
 export const data = new SlashCommandBuilder()
-  .setName("change")
-  .setDescription("fechar um Tópico sobre pr");
+  .setName('change')
+  .setDescription('fechar um Tópico sobre pr')
 
 export async function execute(interaction: CommandInteraction, client: Client) {
-  const channel = await client.channels.fetch(interaction.channelId);
+  const channel = await client.channels.fetch(interaction.channelId)
 
   if (!channel || channel.type !== ChannelType.PublicThread) {
-    return;
+    return
   }
 
-  const members = await channel.members.fetch();
+  const members = await channel.members.fetch()
 
-  const [pullOwner] = members.map((member) => member);
+  const [pullOwner] = members.map((member) => member)
 
   await interaction.reply(
     `❌ Necessário realizar mudanças no código, ${pullOwner.user}`
-  );
+  )
 }
