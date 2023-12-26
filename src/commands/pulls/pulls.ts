@@ -31,6 +31,7 @@ export const data = new SlashCommandBuilder()
 
 export async function autocomplete(interaction: AutocompleteInteraction) {
   const focused = interaction.options.getFocused(true)
+
   const choices = [
     { name: 'Octopost', value: 'octopost' },
     { name: 'PetDex Frontend', value: 'pet-dex-frontend' },
@@ -57,6 +58,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   const projectName = interaction.options.get('projeto')
   const pullID = interaction.options.get('pull-request-id')
 
+
   if (!pullID?.value || !projectName?.value) return
 
   try {
@@ -64,6 +66,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
       projectName.value as string,
       pullID.value as number
     )
+
     const thread = await channel.threads.create({
       name: `#${pullInfo.number} - ${pullInfo.title}`,
       reason: `discutir sobre o pr de ID ${pullInfo.number}`,
