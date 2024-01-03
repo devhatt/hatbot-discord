@@ -1,7 +1,8 @@
 import { env } from '@/config/env'
 import { Client, REST, Routes } from 'discord.js'
 import * as commandModules from './commands'
-import { ReminderDaily } from './cronjobs'
+import { Reminder } from './cronjobs/reminder-daily/reminder'
+import { CronAdapter } from './lib'
 
 export class Bot {
   public commands = Object(commandModules)
@@ -58,6 +59,22 @@ export class Bot {
   }
 
   private async runCronJobs() {
-    ReminderDaily(this.client)
+    const reminder = new Reminder(CronAdapter.create(), this.client)
+
+    reminder.setDailys([
+      {
+        crontime: '0 13 * * 1-5', // Runs at 15h every day - monday to friday
+        channelID: env.DISCORD_OCTOPOST_CHANNEL,
+        message:
+          '🦑 **[OCTOPOST]** Daily iniciando em 1h - as **14h** 🦑\nNo canal <#1137077093201625109>\nCola com nois!!1',
+      },
+      {
+        crontime: '0 15 * * 1-5', // Runs at 15h every day - monday to friday
+        channelID: env.DISCORD_PETDEX_CHANNEL,
+        message:
+          '🐶😺 **[PETDEX]** Daily iniciando em 1h - as **16h** 🐶😺\nNo canal <#1179104791826268180>\n Cola com nois!!1',
+      },
+    ])
+    reminder.daily()
   }
 }
