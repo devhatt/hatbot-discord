@@ -18,7 +18,7 @@ export class Reminder {
 
   daily(): void {
     if (this.dailys.length === 0) {
-      throw new Error('Adicione dailys para o reminder')
+      console.error('Adicione dailys para o reminder')
     }
 
     this.dailys.map((item) => {
