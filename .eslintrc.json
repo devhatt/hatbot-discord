@@ -4,6 +4,7 @@
     "warnOnUnsupportedTypeScriptVersion": false
   },
   "rules": {
+    "no-useless-constructor": "off",
     "array-callback-return": "off",
     "no-new": "off",
     "prettier/prettier": [
