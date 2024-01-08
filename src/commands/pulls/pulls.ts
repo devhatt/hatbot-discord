@@ -49,6 +49,7 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
 
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = await client.channels.fetch(interaction.channelId)
+  const { member } = interaction
 
   if (!channel || channel.type !== ChannelType.GuildText) {
     await interaction.reply("Necessário ser um canal do tipo 'GUILD TEXT'")
@@ -88,7 +89,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     )
 
     const selectUser = await thread.send({
-      content: 'Selecione pelo menos uma pessoa para revisar seu pull request',
+      content: `${member} selecione pelo menos uma pessoa para revisar seu pull request`,
       components: [row],
     })
 
