@@ -1,4 +1,4 @@
-Closes ID_ISSUE
+Closes #ID_ISSUE
 
 <details open> 
   <summary>
@@ -24,7 +24,7 @@ N/A
 N/A
 </details>
 
-<details> 
+<details open> 
   <summary>
     <b>Changelog</b>
   </summary>
@@ -48,7 +48,7 @@ N/A
 - [ ] Tests created
 </details>
 
-<details> 
+<details open> 
   <summary>
     <b>Additional info</b>
   </summary>
