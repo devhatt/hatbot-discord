@@ -36,6 +36,7 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
     { name: 'Octopost', value: 'octopost' },
     { name: 'PetDex Frontend', value: 'pet-dex-frontend' },
     { name: 'PetDex Backend', value: 'pet-dex-backend' },
+    { name: 'Github bot', value: 'hatbot-discord' },
   ]
 
   const filtered = choices.filter((choice) =>
@@ -58,7 +59,6 @@ export async function execute(interaction: CommandInteraction, client: Client) {
 
   const projectName = interaction.options.get('projeto')
   const pullID = interaction.options.get('pull-request-id')
-
 
   if (!pullID?.value || !projectName?.value) return
 
