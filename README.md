@@ -35,7 +35,7 @@ Criar comandos personalizados visando automatizar nossos processos.
 ## Como criar um comando novo:
 
 1. **Crie uma pasta do commando**
-    - Dentro da pasta `comandos`, crie uma pasta com o nome do seu comando
+    - Dentro da pasta `commands`, crie uma pasta com o nome do seu comando
 2. **Crie o comando**
     - É necessário duas coisas dentro do arquivo principal do comando.
         - Uma variável chamada `data` que instancia a classe `SlashCommandBuilder` do discord.js, essa classe que cria o comando pro bot.
