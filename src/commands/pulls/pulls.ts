@@ -69,8 +69,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     )
 
     const thread = await channel.threads.create({
-      name: `#${pullInfo.number} - ${pullInfo.title}`,
-      reason: `discutir sobre o pr de ID ${pullInfo.number}`,
+      name: `{OPEN} - #${pullInfo.number} - ${pullInfo.title}`,
     })
 
     await interaction.reply({
