@@ -1,5 +1,13 @@
 import { sendMessageToPullOwner } from '@/utils/bot/send-message-pull-owner'
 import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
+import { prContent } from '@/utils/bot/prContent'
+import { getPullRequest } from '@/utils/pulls.info'
+import {
+  CommandInteraction,
+  SlashCommandBuilder,
+  Client,
+  ChannelType,
+} from 'discord.js'
 
 export const data = new SlashCommandBuilder()
   .setName('approve')
@@ -21,8 +29,14 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     channel.name.slice(0, initialOpenPosition) +
     channel.name.slice(finalOpenPosition)
 
+  const prInfo = await prContent(channel)
+
+  if (!prInfo) return
+
+  const { state } = await getPullRequest(prInfo.repository, prInfo.pullId)
+
   // avoid to add {CLOSED} twice
-  if (channel.name.includes('{OPEN}')) {
+  if (channel.name.includes('{OPEN}') && state === 'closed') {
     channel.setName(`{CLOSED} ${closedPrText}`)
   }
 
