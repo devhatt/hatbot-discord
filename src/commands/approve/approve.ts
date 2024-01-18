@@ -38,10 +38,15 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   // avoid to add {CLOSED} twice
   if (channel.name.includes('{OPEN}') && state === 'closed') {
     channel.setName(`{CLOSED} ${closedPrText}`)
+    await interaction.reply(
+      `✅ ${interaction.user} revisou e mergeou seu Pull request 🫡`
+    )
+    await channel.setArchived(true)
+    return
   }
-
   const [pullOwner] = members.map((member) => member)
 
-  await interaction.reply(`✅ aprovado ${pullOwner.user}`)
-  await channel.setArchived(true)
+  await interaction.reply(
+    `✅ ${interaction.user} revisou e aprovou seu Pull Request, ${pullOwner.user} 🫡`
+  )
 }
