@@ -35,16 +35,17 @@ export async function execute(interaction: CommandInteraction, client: Client) {
 
   const { state } = await getPullRequest(prInfo.repository, prInfo.pullId)
 
+  const [pullOwner] = members.map((member) => member)
+
   // avoid to add {CLOSED} twice
   if (channel.name.includes('{OPEN}') && state === 'closed') {
     channel.setName(`{CLOSED} ${closedPrText}`)
     await interaction.reply(
-      `✅ ${interaction.user} revisou e mergeou seu Pull request 🫡`
+      `✅ ${interaction.user} revisou e mergeou seu Pull Request, ${pullOwner.user} 🫡`
     )
     await channel.setArchived(true)
     return
   }
-  const [pullOwner] = members.map((member) => member)
 
   await interaction.reply(
     `✅ ${interaction.user} revisou e aprovou seu Pull Request, ${pullOwner.user} 🫡`
