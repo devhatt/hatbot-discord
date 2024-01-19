@@ -1,13 +1,12 @@
-import { sendMessageToPullOwner } from '@/utils/bot/send-message-pull-owner'
-import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
-import { prContent } from '@/utils/bot/prContent'
-import { getPullRequest } from '@/utils/pulls.info'
 import {
   CommandInteraction,
   SlashCommandBuilder,
   Client,
   ChannelType,
 } from 'discord.js'
+import { getPullOwner } from '@/utils/bot/get-pull-owner'
+import { prContent } from '@/utils/bot/prContent'
+import { getPullRequest } from '@/utils/pulls.info'
 
 export const data = new SlashCommandBuilder()
   .setName('approve')
@@ -16,11 +15,10 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = client.channels.cache.get(interaction.channelId)
 
-  const message = '✅ aprovado: '
-  const replyContent = await sendMessageToPullOwner(channel, message)
-
-  if (replyContent) await interaction.reply(replyContent)
-  const members = await channel.members.fetch()
+  if (!channel || channel.type !== ChannelType.PublicThread) {
+    await interaction.reply('Necessário ser um tópico público')
+    return
+  }
 
   const initialOpenPosition = channel.name.indexOf('{OPEN}')
   const finalOpenPosition = initialOpenPosition + '{OPEN}'.length
@@ -29,25 +27,30 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     channel.name.slice(0, initialOpenPosition) +
     channel.name.slice(finalOpenPosition)
 
+  await interaction.deferReply()
   const prInfo = await prContent(channel)
 
   if (!prInfo) return
+  const [pullOwner, { state }] = await Promise.all([
+    getPullOwner(channel),
+    getPullRequest(prInfo.repository, prInfo.pullId),
+  ])
 
-  const { state } = await getPullRequest(prInfo.repository, prInfo.pullId)
-
-  const [pullOwner] = members.map((member) => member)
+  if (!pullOwner) return
 
   // avoid to add {CLOSED} twice
   if (channel.name.includes('{OPEN}') && state === 'closed') {
-    channel.setName(`{CLOSED} ${closedPrText}`)
-    await interaction.reply(
-      `✅ ${interaction.user} revisou e mergeou seu Pull Request, ${pullOwner.user} 🫡`
-    )
+    await Promise.all([
+      interaction.editReply(
+        `✅ ${interaction.user} Revisou e mergeou seu Pull Request, ${pullOwner} 🫡`
+      ),
+      channel.setName(`{CLOSED} ${closedPrText}`),
+    ])
     await channel.setArchived(true)
     return
   }
 
-  await interaction.reply(
-    `✅ ${interaction.user} revisou e aprovou seu Pull Request, ${pullOwner.user} 🫡`
+  await interaction.editReply(
+    `✅ ${interaction.user} Revisou e aprovou seu Pull Request, ${pullOwner} 🫡`
   )
 }

@@ -7,7 +7,7 @@ export async function prContent(channel: Channel | undefined) {
 
   const messages = await channel.messages.fetchPinned()
 
-  const messageInfos = messages.first()
+  const messageInfos = messages.at(0)
 
   if (!messageInfos) return
 

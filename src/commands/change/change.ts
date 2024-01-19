@@ -1,15 +1,17 @@
-import { sendMessageToPullOwner } from '@/utils/bot/send-message-pull-owner'
+import { getPullOwner } from '@/utils/bot/get-pull-owner'
 import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
   .setName('change')
-  .setDescription('fechar um Tópico sobre pr')
+  .setDescription('Avisar sobre mudanças no pr')
 
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = client.channels.cache.get(interaction.channelId)
 
-  const message = '❌ Necessário realizar mudanças no código: '
-  const replyContent = await sendMessageToPullOwner(channel, message)
+  const pullOwner = await getPullOwner(channel)
 
-  if (replyContent) await interaction.reply(replyContent)
+  if (pullOwner)
+    await interaction.reply(
+      `❌ Necessário realizar mudanças no código ${pullOwner}`
+    )
 }

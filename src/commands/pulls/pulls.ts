@@ -95,6 +95,8 @@ export async function execute(interaction: CommandInteraction, client: Client) {
       components: [row],
     })
 
+    await pinMessage(thread)
+
     const collector = selectUser.createMessageComponentCollector({
       componentType: ComponentType.UserSelect,
     })
