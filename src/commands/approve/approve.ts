@@ -1,25 +1,15 @@
-import {
-  CommandInteraction,
-  SlashCommandBuilder,
-  Client,
-  ChannelType,
-} from 'discord.js'
+import { sendMessageToPullOwner } from '@/utils/bot/send-message-pull-owner'
+import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
   .setName('approve')
   .setDescription('fechar um Tópico sobre pr')
 
 export async function execute(interaction: CommandInteraction, client: Client) {
-  const channel = await client.channels.fetch(interaction.channelId)
+  const channel = client.channels.cache.get(interaction.channelId)
 
-  if (!channel || channel.type !== ChannelType.PublicThread) {
-    return
-  }
+  const message = '✅ aprovado: '
+  const replyContent = await sendMessageToPullOwner(channel, message)
 
-  const members = await channel.members.fetch()
-
-  const [pullOwner] = members.map((member) => member)
-
-  await interaction.reply(`✅ aprovado ${pullOwner.user}`)
-  await channel.setArchived(true)
+  if (replyContent) await interaction.reply(replyContent)
 }
