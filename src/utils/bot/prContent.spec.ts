@@ -8,7 +8,7 @@ describe('prContent', () => {
         type: ChannelType.PublicThread,
         messages: {
           fetchPinned: jest.fn().mockReturnValue({
-            first: jest.fn().mockReturnValue({
+            at: jest.fn().mockReturnValue({
               content:
                 '**Repositório:** repository test\n **Pull Request ID:** 1',
             }),
@@ -43,7 +43,7 @@ describe('prContent', () => {
         type: ChannelType.PublicThread,
         messages: {
           fetchPinned: jest.fn().mockReturnValue({
-            first: jest.fn().mockReturnValue({
+            at: jest.fn().mockReturnValue({
               content:
                 '**Repositório:** repository test\n **Pull Request ID:** not a number',
             }),
@@ -63,7 +63,7 @@ describe('prContent', () => {
         type: ChannelType.PublicThread,
         messages: {
           fetchPinned: jest.fn().mockReturnValue({
-            first: jest.fn().mockReturnValue({
+            at: jest.fn().mockReturnValue({
               content: 'wrong content',
             }),
           }),
