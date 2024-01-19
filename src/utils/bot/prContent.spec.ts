@@ -18,10 +18,22 @@ describe('prContent', () => {
 
       const mockResult = await prContent(mockChannel)
 
-      expect(mockResult).not.toBeNull()
       expect(mockResult?.pullId).toBe(1)
+      expect(mockResult).not.toBeUndefined()
       expect(mockResult?.pullId).not.toBe('1')
       expect(mockResult?.repository).toBe('repository test')
+    })
+  })
+
+  describe('when channel type its not a public thread', () => {
+    it('returns undefined', async () => {
+      const mockChannel: Channel = {
+        type: ChannelType.PrivateThread,
+      } as unknown as Channel
+
+      const mockResult = await prContent(mockChannel)
+
+      expect(mockResult).toBeUndefined()
     })
   })
 
