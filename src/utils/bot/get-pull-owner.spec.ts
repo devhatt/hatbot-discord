@@ -29,6 +29,7 @@ describe('getPullOwner', () => {
         expect(mockOwner).not.toBe('teste')
       })
     })
+
     describe('but the channel is not a public thread', () => {
       it('doesnt get any user', async () => {
         const channelMock = {

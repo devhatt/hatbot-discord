@@ -7,6 +7,7 @@ import {
 import { getPullOwner } from '@/utils/bot/get-pull-owner'
 import { prContent } from '@/utils/bot/prContent'
 import { getPullRequest } from '@/utils/pulls.info'
+import { getRawThreadName } from './utils/getRawThreadName'
 
 export const data = new SlashCommandBuilder()
   .setName('approve')
@@ -20,13 +21,6 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     return
   }
 
-  const initialOpenPosition = channel.name.indexOf('{OPEN}')
-  const finalOpenPosition = initialOpenPosition + '{OPEN}'.length
-
-  const closedPrText =
-    channel.name.slice(0, initialOpenPosition) +
-    channel.name.slice(finalOpenPosition)
-
   await interaction.deferReply()
   const prInfo = await prContent(channel)
 
@@ -38,13 +32,15 @@ export async function execute(interaction: CommandInteraction, client: Client) {
 
   if (!pullOwner) return
 
+  const rawThreadName = await getRawThreadName(channel)
+
   // avoid to add {CLOSED} twice
   if (channel.name.includes('{OPEN}') && state === 'closed') {
     await Promise.all([
       interaction.editReply(
         `✅ ${interaction.user} Revisou e mergeou seu Pull Request, ${pullOwner} 🫡`
       ),
-      channel.setName(`{CLOSED} ${closedPrText}`),
+      channel.setName(`{CLOSED} ${rawThreadName}`),
     ])
     await channel.setArchived(true)
     return

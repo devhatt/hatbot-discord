@@ -26,6 +26,7 @@ describe('pinMessage', () => {
         expect(threadMock.type).toBe(ChannelType.PrivateThread)
       })
     })
+
     it('pins the message correctly', async () => {
       const threadMock: ThreadChannel = {
         type: ChannelType.PublicThread,
