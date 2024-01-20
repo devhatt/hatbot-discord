@@ -23,9 +23,11 @@ export async function getPullOwner(channel: Channel | undefined) {
     console.error('error fetching messages:', error)
   }
 
-  const members = await channel.members.fetch()
+  const allMembers = await channel.members.fetch()
 
-  const pullOwner = pullRequestOwner ? members.get(pullRequestOwner) : null
+  const pullOwner = pullRequestOwner
+    ? allMembers.get(pullRequestOwner)
+    : undefined
 
   return pullOwner?.user
 }
