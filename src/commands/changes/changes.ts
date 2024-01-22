@@ -2,7 +2,7 @@ import { getPullOwner } from '@/utils/bot/get-pull-owner'
 import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
-  .setName('change')
+  .setName('changes')
   .setDescription('Avisar sobre mudanças no pr')
 
 export async function execute(interaction: CommandInteraction, client: Client) {

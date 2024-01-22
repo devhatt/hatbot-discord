@@ -3,28 +3,26 @@ import { pinMessage } from './pinMessage'
 
 describe('pinMessage', () => {
   describe('when has a message to pin', () => {
-    describe('but when the thread type is not public thread', () => {
-      it('doesnt pin the message', async () => {
-        const threadMock: ThreadChannel = {
-          type: ChannelType.PrivateThread,
-          messages: {
-            fetch: jest.fn().mockReturnValue({
-              first: jest.fn().mockReturnValue({
-                pin: jest.fn(),
-              }),
+    it('doesnt pin the message when thread type is not public thread', async () => {
+      const threadMock: ThreadChannel = {
+        type: ChannelType.PrivateThread,
+        messages: {
+          fetch: jest.fn().mockReturnValue({
+            first: jest.fn().mockReturnValue({
+              pin: jest.fn(),
             }),
-          },
-        } as unknown as ThreadChannel
+          }),
+        },
+      } as unknown as ThreadChannel
 
-        await pinMessage(threadMock)
+      await pinMessage(threadMock)
 
-        // the types only works if await to the mock be resolved
-        const mockFetch = await threadMock.messages.fetch()
+      // the types only works if await to the mock be resolved
+      const mockFetch = await threadMock.messages.fetch()
 
-        expect(mockFetch.first).not.toHaveBeenCalled()
-        expect(mockFetch.first()?.pin).not.toHaveBeenCalled()
-        expect(threadMock.type).toBe(ChannelType.PrivateThread)
-      })
+      expect(mockFetch.first).not.toHaveBeenCalled()
+      expect(mockFetch.first()?.pin).not.toHaveBeenCalled()
+      expect(threadMock.type).toBe(ChannelType.PrivateThread)
     })
 
     it('pins the message correctly', async () => {
@@ -51,7 +49,7 @@ describe('pinMessage', () => {
   })
 
   describe("when haven't a message to pin", () => {
-    it('pins the message correctly', async () => {
+    it('doesnt message correctly', async () => {
       const threadMock: ThreadChannel = {
         type: ChannelType.PublicThread,
         messages: {
