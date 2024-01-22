@@ -1,3 +1,4 @@
+import { getPullRequest } from '@/utils/pulls.info'
 import {
   CommandInteraction,
   SlashCommandBuilder,
@@ -10,7 +11,7 @@ import {
   ButtonStyle,
   AutocompleteInteraction,
 } from 'discord.js'
-import { getPullRequest } from './utils/pulls.info'
+import { pinMessage } from './utils/pinMessage'
 
 export const data = new SlashCommandBuilder()
   .setName('pulls')
@@ -69,9 +70,10 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     )
 
     const thread = await channel.threads.create({
-      name: `#${pullInfo.number} - ${pullInfo.title}`,
-      reason: `discutir sobre o pr de ID ${pullInfo.number}`,
+      name: `{OPEN} - #${pullInfo.number} - ${pullInfo.title}`,
     })
+
+    await thread.members.add(interaction.user.id)
 
     await interaction.reply({
       content: 'Pegando informações do pull request...',
@@ -93,6 +95,8 @@ export async function execute(interaction: CommandInteraction, client: Client) {
       components: [row],
     })
 
+    await pinMessage(thread)
+
     const collector = selectUser.createMessageComponentCollector({
       componentType: ComponentType.UserSelect,
     })
@@ -111,15 +115,17 @@ export async function execute(interaction: CommandInteraction, client: Client) {
         githubButton
       )
 
-      interaction.reply({
+      await interaction.reply({
         content: `
         **Revisores:** ${usersSelected}
+**Repositório:** ${projectName.value}
+**Pull Request ID:** ${pullID.value}
 **Info:** Quando o pull request for concluído, comente '/approve'
       `,
         components: [row],
       })
 
-      await thread.members.add(interaction.user.id)
+      await pinMessage(thread)
     })
   } catch (error) {
     return interaction.reply({
