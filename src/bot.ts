@@ -10,6 +10,8 @@ export class Bot {
   constructor(public readonly client: Client) {
     this.client.login(env.DISCORD_TOKEN)
 
+    this.runCronJobs()
+
     this.client.once('ready', (bot) => {
       console.log(
         `[${bot.user.username}]: 🚀🫡Ready! bot is running and logged as ${bot.user.tag}`
@@ -23,8 +25,6 @@ export class Bot {
     this.registerCommands()
 
     this.onInteractionCreate()
-
-    this.runCronJobs()
   }
 
   private async registerCommands() {
@@ -69,7 +69,7 @@ export class Bot {
           '🦑 **[OCTOPOST]** Daily iniciando em 1h - as **14h** 🦑\nNo canal <#1137077093201625109>\nCola com nois!!1',
       },
       {
-        crontime: '0 15 * * 1-5', // Runs at 15h every day - monday to friday
+        crontime: '30 17 * * 1-5', // Runs at 17:30h every day - monday to friday
         channelID: env.DISCORD_PETDEX_CHANNEL,
         message:
           '🐶😺 **[PETDEX]** Daily iniciando em 1h - as **16h** 🐶😺\nNo canal <#1179104791826268180>\n Cola com nois!!1',

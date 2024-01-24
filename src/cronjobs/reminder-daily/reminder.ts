@@ -1,5 +1,5 @@
 import { Cron } from '@/lib'
-import { SendMessageChat } from '@/utils'
+import { SendMessageNewsChat } from '@/utils'
 import { Client } from 'discord.js'
 
 interface Daily {
@@ -23,7 +23,7 @@ export class Reminder {
 
     this.dailys.map((item) => {
       const cron = this.cron.New(item.crontime, () => {
-        SendMessageChat(this.client, {
+        SendMessageNewsChat(this.client, {
           channelID: item.channelID,
           message: item.message,
         })
