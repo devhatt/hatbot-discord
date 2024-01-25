@@ -72,7 +72,7 @@ export class Bot {
         crontime: '30 17 * * 1-5', // Runs at 17:30h every day - monday to friday
         channelID: env.DISCORD_PETDEX_CHANNEL,
         message:
-          '🐶😺 **[PETDEX]** Daily iniciando em 1h - as **16h** 🐶😺\nNo canal <#1179104791826268180>\n Cola com nois!!1',
+          '🐶😺 **[PETDEX]** Daily iniciando em 1h - as **18:30** 🐶😺\nNo canal <#1179104791826268180>\n Cola com nois!!1',
       },
     ])
     reminder.daily()

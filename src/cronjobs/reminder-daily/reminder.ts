@@ -21,7 +21,7 @@ export class Reminder {
       console.error('Adicione dailys para o reminder')
     }
 
-    this.dailys.map((item) => {
+    this.dailys.forEach((item) => {
       const cron = this.cron.New(item.crontime, () => {
         SendMessageNewsChat(this.client, {
           channelID: item.channelID,
