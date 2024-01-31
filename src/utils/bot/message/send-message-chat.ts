@@ -14,6 +14,5 @@ export async function SendMessageChat(
   if (!channel || !(channel instanceof TextChannel)) {
     return
   }
-
-  channel.send(message)
+  await channel.send(message)
 }
