@@ -1,19 +1,19 @@
-import { getPullOwner } from '@/utils/bot/get-pull-owner'
+import { prContent } from '@/utils/bot/prContent'
 import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
-  .setName('changes')
+  .setName('rereview')
   .setDescription(
-    'Avisar sobre possíveis mudanças necessárias a serem feitas no pr'
+    'Avisar aos revisores que seu PR está pronto para ser revisado novamente'
   )
 
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = client.channels.cache.get(interaction.channelId)
 
-  const pullOwner = await getPullOwner(channel)
+  const prInfo = await prContent(channel)
 
-  if (pullOwner)
+  if (prInfo)
     await interaction.reply(
-      `❌ Necessário realizar mudanças no código ${pullOwner}`
+      `Mudanças foram feitas e este PR está pronto para ser revisado novamente ${prInfo.revisors}  🤓☝️ `
     )
 }
