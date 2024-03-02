@@ -125,7 +125,16 @@ export async function execute(interaction: CommandInteraction, client: Client) {
         components: [row],
       })
 
-      await pinMessage(thread)
+      const messages = await thread.messages.fetchPinned()
+
+      const messageInfo = messages.at(0)
+      console.log(messageInfo)
+      if (
+        !messageInfo ||
+        !messageInfo.content.includes(pullID.value?.toString()!)
+      ) {
+        await pinMessage(thread)
+      }
     })
   } catch (error) {
     return interaction.reply({
