@@ -10,6 +10,10 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = client.channels.cache.get(interaction.channelId)
 
+  if (!channel) {
+    return interaction.reply('Thread não encontrada')
+  }
+
   const prInfo = await prContent(channel)
 
   if (prInfo)

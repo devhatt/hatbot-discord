@@ -58,7 +58,6 @@ describe('prContent', () => {
       })
 
       const mockResult = await prContent(mockChannel)
-      console.log(mockResult)
       expect(mockResult?.pullId).toBeNaN()
     })
   })

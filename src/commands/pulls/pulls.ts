@@ -83,8 +83,8 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     const selectSlang = new UserSelectMenuBuilder()
       .setCustomId(`select-user`)
       .setPlaceholder('Pessoas para revisar')
-      .setMinValues(1)
-      .setMaxValues(2)
+      .setMinValues(2)
+      .setMaxValues(6)
 
     const row = new ActionRowBuilder<UserSelectMenuBuilder>().addComponents(
       selectSlang
