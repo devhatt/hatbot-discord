@@ -7,7 +7,8 @@ const makeSut = (props?: Partial<unknown | Channel>) => {
     messages: {
       fetchPinned: jest.fn().mockReturnValue({
         at: jest.fn().mockReturnValue({
-          content: '**Repositório:** repository test\n **Pull Request ID:** 1',
+          content:
+            '**Revisores:** mock user \n**Repositório:** repository test\n **Pull Request ID:** 1',
         }),
       }),
     },
@@ -50,14 +51,14 @@ describe('prContent', () => {
           fetchPinned: jest.fn().mockReturnValue({
             at: jest.fn().mockReturnValue({
               content:
-                '**Repositório:** repository test\n **Pull Request ID:** not a number',
+                '**Revisores:** mock user \n**Repositório:** repository test\n **Pull Request ID:** not a number',
             }),
           }),
         },
       })
 
       const mockResult = await prContent(mockChannel)
-
+      console.log(mockResult)
       expect(mockResult?.pullId).toBeNaN()
     })
   })
