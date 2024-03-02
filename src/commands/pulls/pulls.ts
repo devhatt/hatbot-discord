@@ -128,7 +128,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
       const messages = await thread.messages.fetchPinned()
 
       const messageInfo = messages.at(0)
-      console.log(messageInfo)
+
       if (
         !messageInfo ||
         !messageInfo.content.includes(pullID.value?.toString()!)
