@@ -3,7 +3,9 @@ import { CommandInteraction, SlashCommandBuilder, Client } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
   .setName('changes')
-  .setDescription('Avisar sobre mudanças no pr')
+  .setDescription(
+    'Avise sobre possíveis mudanças necessárias a serem feitas no pr'
+  )
 
 export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = client.channels.cache.get(interaction.channelId)

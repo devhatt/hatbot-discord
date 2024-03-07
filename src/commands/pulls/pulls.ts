@@ -83,8 +83,8 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     const selectSlang = new UserSelectMenuBuilder()
       .setCustomId(`select-user`)
       .setPlaceholder('Pessoas para revisar')
-      .setMinValues(1)
-      .setMaxValues(10)
+      .setMinValues(2)
+      .setMaxValues(6)
 
     const row = new ActionRowBuilder<UserSelectMenuBuilder>().addComponents(
       selectSlang
@@ -125,7 +125,16 @@ export async function execute(interaction: CommandInteraction, client: Client) {
         components: [row],
       })
 
-      await pinMessage(thread)
+      const messages = await thread.messages.fetchPinned()
+
+      const messageInfo = messages.at(0)
+
+      if (
+        !messageInfo ||
+        !messageInfo.content.includes(pullID.value?.toString()!)
+      ) {
+        await pinMessage(thread)
+      }
     })
   } catch (error) {
     return interaction.reply({
