@@ -12,11 +12,13 @@ export async function prContent(channel: Channel | undefined) {
   if (!messageInfos) return
 
   const rawContent = messageInfos.content
+  const revisorsRepo = rawContent.match(/\*\*Revisores:\*\*\s*(.*)/)
   const matchRepo = rawContent.match(/\*\*Repositório:\*\*\s*(.*)/)
   const matchPullId = rawContent.match(/\*\*Pull Request ID:\*\*\s*(.*)/)
 
-  if (matchRepo && matchPullId) {
+  if (revisorsRepo && matchRepo && matchPullId) {
     return {
+      revisors: revisorsRepo[1],
       repository: matchRepo[1],
       pullId: Number(matchPullId[1]),
     }
