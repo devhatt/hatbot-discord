@@ -42,7 +42,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   const channel = await client.channels.fetch(interaction.channelId)
 
   if (!channel || channel.type !== ChannelType.GuildText) {
-    await interaction.reply("Necessário ser um canal do tipo 'GUILD TEXT'")
+    await interaction.reply('Necessário ser um canal de texto válido')
   }
 
   const projectName = interaction.options.get('projeto')
