@@ -29,20 +29,14 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
   const focused = interaction.options.getFocused()
 
   const mentorRolesArray =
-    interaction.guild?.roles.cache.map((r) => ({
-      name: r.name,
-      value: r.id,
-    })) || []
-  const mentorRoles = mentorRolesArray.filter((r) =>
-    r.name.toLowerCase().includes('mentor')
-  )
-  const mappedMentorRoles =
-    mentorRoles.map((r) => ({
-      name: r.name,
-      id: r.value,
-    })) || []
+    interaction.guild?.roles.cache
+      .map((role) => ({
+        name: role.name,
+        id: role.id,
+      }))
+      .filter((role) => role.name.toLowerCase().includes('mentor')) || []
 
-  const filtered = mappedMentorRoles.filter((choice) =>
+  const filtered = mentorRolesArray.filter((choice) =>
     choice.id.toLowerCase().includes(focused.toLowerCase())
   )
 
