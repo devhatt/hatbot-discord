@@ -5,10 +5,11 @@ import {
   AutocompleteInteraction,
   roleMention,
   channelMention,
+  ChannelType,
 } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
-  .setName('mentores')
+  .setName('mentors')
   .setDescription('Pedir ajuda dos mentores')
   .addStringOption((opt) =>
     opt
@@ -55,6 +56,12 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
 
 export async function execute(interaction: CommandInteraction) {
   const channel = interaction.channel as TextChannel
+
+  // if (!channel || channel.type !== ChannelType.GuildText) {
+  //   await interaction.reply("Necessário ser um canal do tipo 'GUILD TEXT'")
+  //   return
+  // }
+
   const { member } = interaction
   const channelId: string = '1128384525098033264'
 
