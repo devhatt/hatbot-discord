@@ -44,7 +44,6 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
   const filtered = mappedMentorRoles.filter((choice) =>
     choice.id.toLowerCase().includes(focused.toLowerCase())
   )
-  console.log('Filtered ', filtered)
 
   await interaction.respond(
     filtered.map((choice) => ({
@@ -73,8 +72,6 @@ export async function execute(interaction: CommandInteraction) {
   const mentorName = await interaction.guild?.roles
     .fetch(`${mentor}`)
     .then((role) => role?.name.split(' ')[0].toUpperCase())
-
-  console.log(mentor)
 
   const thread = await channel.threads.create({
     name: `{${mentorName}} - ${question?.value}`,
