@@ -57,11 +57,6 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
 export async function execute(interaction: CommandInteraction) {
   const channel = interaction.channel as TextChannel
 
-  // if (!channel || channel.type !== ChannelType.GuildText) {
-  //   await interaction.reply("Necessário ser um canal do tipo 'GUILD TEXT'")
-  //   return
-  // }
-
   const { member } = interaction
   const channelId: string = '1128384525098033264'
 
@@ -73,6 +68,11 @@ export async function execute(interaction: CommandInteraction) {
       content: `Você não pode usar este comando aqui, utilize o canal ${channelMention(channelId)} para tal`,
       ephemeral: true,
     })
+    return
+  }
+
+  if (!channel || channel.type !== ChannelType.GuildText) {
+    await interaction.reply("Necessário ser um canal do tipo 'GUILD TEXT'")
     return
   }
 
