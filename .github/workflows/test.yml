@@ -16,5 +16,5 @@ jobs:
       - name: Setup deps
         uses: ./.github/actions/install-deps
 
-      - name: Build
-        run: pnpm build
+      - name: Test
+        run: pnpm test

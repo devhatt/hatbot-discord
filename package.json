@@ -9,8 +9,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "dev:watch": "tsx watch src/main.ts",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\""
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prettier": "prettier \"src/**/*.ts\"",
+    "prettier:fix": "prettier --write \"src/**/*.ts\"",
+    "code-style": "pnpm lint && pnpm prettier"
   },
   "keywords": [],
   "author": "",
