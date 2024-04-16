@@ -28,8 +28,6 @@ jobs:
             code:
               - '**.js'
               - '**.ts'
-              - '**.tsx'
-              - '**.jsx'
 
       - name: Run eslint in code files
         if: steps.changed-files.outputs.code_any_changed == 'true'
