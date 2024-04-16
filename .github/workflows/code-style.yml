@@ -1,0 +1,37 @@
+name: Node.js CI
+on:
+  pull_request:
+    branches: ['master']
+
+jobs:
+  code-style:
+    runs-on: ubuntu-latest
+    name: code-style
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup deps
+        uses: ./.github/actions/install-deps
+
+      - name: Run prettier in all files
+        if: steps.all-changed-files.outputs.any_changed == 'true'
+        env:
+          files: ${{ steps.all-changed-files.outputs.all_changed_files }}
+        run: pnpm exec prettier $files --check --ignore-unknown
+
+      - name: Get specific changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files_yaml: |
+            code:
+              - '**.js'
+              - '**.ts'
+
+      - name: Run eslint in code files
+        if: steps.changed-files.outputs.code_any_changed == 'true'
+        env:
+          files: ${{ steps.changed-files.outputs.code_all_changed_files }}
+        run: pnpm exec eslint $files --report-unused-disable-directives --max-warnings 0 --output-file eslint_report.json --format json
+        continue-on-error: true
