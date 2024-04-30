@@ -34,7 +34,8 @@ export async function autocomplete(interaction: AutocompleteInteraction) {
   const focused = interaction.options.getFocused(true)
 
   const choices = [
-    { name: 'Octopost', value: 'octopost' },
+    { name: 'Octopost Frontend', value: 'octopost' },
+    { name: 'Octopost Backend', value: 'octopost-backend' },
     { name: 'PetDex Frontend', value: 'pet-dex-frontend' },
     { name: 'PetDex Backend', value: 'pet-dex-backend' },
     { name: 'Github bot', value: 'hatbot-discord' },
