@@ -53,7 +53,7 @@ export class Bot {
 
       if (interaction.isAutocomplete()) {
         const { commandName } = interaction
-        this.commands[commandName].autocomplete(interaction)
+        this.commands[commandName].autocomplete(interaction, this.client)
       }
     })
   }
