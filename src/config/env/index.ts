@@ -5,6 +5,7 @@ import { z } from 'zod'
 const envSchema = z.object({
   DISCORD_TOKEN: z.string(),
   CLIENT_ID: z.string(),
+  CLASS_VIDEOS: z.string(),
   DISCORD_SERVER_ID: z.string(),
   NOTION_TOKEN: z.string(),
   NOTION_DATABASE_ID: z.string(),
