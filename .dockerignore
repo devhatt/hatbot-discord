@@ -1,0 +1,9 @@
+.git 
+dist
+.github
+.husky 
+node_modules
+.gitignore
+README.md 
+.editorconfig
+.env
