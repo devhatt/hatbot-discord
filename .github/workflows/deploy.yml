@@ -62,5 +62,7 @@ jobs:
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"
       - name: Pull ima from docker hub
         run: docker pull devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
+      - name: Remove all docker containers 
+        run: docker rm -f $(docker ps -q)
       - name: Run docker container
         run: docker run -d --restart=always --name discord-bot-c1 devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
