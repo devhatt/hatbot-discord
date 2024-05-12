@@ -52,17 +52,4 @@ jobs:
       - name: Remove all docker containers 
         run: docker rm -f $(docker ps -q)
       - name: Run docker container
-        run: |
-            docker run -d --restart=always 
-            -e DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}'
-            -e CLIENT_ID='${{ secrets.CLIENT_ID }}'
-            -e DISCORD_SERVER_ID='${{ secrets.DISCORD_SERVER_ID }}'
-            -e DISCORD_CHANNEL='${{ secrets.DISCORD_CHANNEL }}'
-            -e DISCORD_PETDEX_ROLE='${{ secrets.DISCORD_PETDEX_ROLE }}'
-            -e DISCORD_OCTOPOST_ROLE='${{ secrets.DISCORD_OCTOPOST_ROLE }}'
-            -e DISCORD_OCTOPOST_CHANNEL='${{ secrets.DISCORD_OCTOPOST_CHANNEL }}'
-            -e DISCORD_PETDEX_CHANNEL='${{ secrets.DISCORD_PETDEX_CHANNEL }}'
-            -e CLASS_VIDEOS='${{ secrets.CLASS_VIDEOS }}'
-            -e NOTION_TOKEN='${{ secrets.NOTION_TOKEN }}'
-            -e NOTION_DATABASE_ID='${{ secrets.NOTION_DATABASE_ID }}'
-            --name discord-bot-c1 devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
+        run: docker run -d --restart=always -e DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' -e CLIENT_ID='${{ secrets.CLIENT_ID }}' -e DISCORD_SERVER_ID='${{ secrets.DISCORD_SERVER_ID }}' -e DISCORD_CHANNEL='${{ secrets.DISCORD_CHANNEL }}' -e DISCORD_PETDEX_ROLE='${{ secrets.DISCORD_PETDEX_ROLE }}' -e DISCORD_OCTOPOST_ROLE='${{ secrets.DISCORD_OCTOPOST_ROLE }}' -e DISCORD_OCTOPOST_CHANNEL='${{ secrets.DISCORD_OCTOPOST_CHANNEL }}' -e DISCORD_PETDEX_CHANNEL='${{ secrets.DISCORD_PETDEX_CHANNEL }}' -e CLASS_VIDEOS='${{ secrets.CLASS_VIDEOS }}' -e NOTION_TOKEN='${{ secrets.NOTION_TOKEN }}' -e NOTION_DATABASE_ID='${{ secrets.NOTION_DATABASE_ID }}' --name discord-bot-c1 devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
