@@ -41,6 +41,18 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: self-hosted
+    env:
+      DISCORD_TOKEN: '${{ secrets.DISCORD_TOKEN }}'
+      CLIENT_ID: '${{ secrets.CLIENT_ID }}'
+      DISCORD_SERVER_ID: '${{ secrets.DISCORD_SERVER_ID }}'
+      DISCORD_CHANNEL: '${{ secrets.DISCORD_CHANNEL }}'
+      DISCORD_PETDEX_ROLE: '${{ secrets.DISCORD_PETDEX_ROLE }}'
+      DISCORD_OCTOPOST_ROLE: '${{ secrets.DISCORD_OCTOPOST_ROLE }}'
+      DISCORD_OCTOPOST_CHANNEL: '${{ secrets.DISCORD_OCTOPOST_CHANNEL }}'
+      DISCORD_PETDEX_CHANNEL: '${{ secrets.DISCORD_PETDEX_CHANNEL }}'
+      CLASS_VIDEOS: '${{ secrets.CLASS_VIDEOS }}'
+      NOTION_TOKEN: '${{ secrets.NOTION_TOKEN }}'
+      NOTION_DATABASE_ID: '${{ secrets.NOTION_DATABASE_ID }}'
 
     steps:
       - name: Generate sha
