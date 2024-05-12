@@ -4,11 +4,13 @@
   "description": "",
   "main": "src/main.ts",
   "engines": {
-    "node": "20.10.0",
+    "node": "20.13.1",
     "pnpm": "8.x"
   },
   "scripts": {
     "build": "tsup",
+    "build:watch": "tsup --watch",
+    "start": "node dist/main.js",
     "dev": "tsx src/main.ts",
     "test": "jest",
     "test:watch": "jest --watch",
