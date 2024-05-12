@@ -37,4 +37,18 @@ jobs:
           docker push devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
           docker tag devhatt/discord-bot:${{steps.generate_sha.outputs.sha}} devhatt/discord-bot:latest
           docker push devhatt/discord-bot:latest
-          
+
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+
+    steps:
+      - name: Generate sha
+        id: generate_sha
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+      - name: Pull ima from docker hub
+        run: docker pull devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
+      - name: Run docker container
+        run: docker run -d --restart=always --name discord-bot-c1 devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
