@@ -37,13 +37,4 @@ jobs:
           docker push devhatt/discord-bot:${{steps.generate_sha.outputs.sha}}
           docker tag devhatt/discord-bot:${{steps.generate_sha.outputs.sha}} devhatt/discord-bot:latest
           docker push devhatt/discord-bot:latest
-
-      - name: Update image tag
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          branch: main
-          valueFile: "deploy/values.yaml"
-          propertyPath: "image.tag"
-          value: "${{steps.generate_sha.outputs.sha}}"
-          commitChange: true
-          message: "new: Updated tag in values helm"
+          
